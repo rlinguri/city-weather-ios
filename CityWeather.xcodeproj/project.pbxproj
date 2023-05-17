@@ -15,6 +15,14 @@
 		B2AF473C2A1530210019FEC9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AF473B2A1530210019FEC9 /* UIKit.framework */; };
 		B2AF473E2A15302B0019FEC9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AF473D2A15302B0019FEC9 /* Foundation.framework */; };
 		B2AF47402A1530310019FEC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2AF473F2A1530310019FEC9 /* CoreGraphics.framework */; };
+		B2AF474A2A1544B00019FEC9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47492A1544B00019FEC9 /* Environment.swift */; };
+		B2AF474F2A1547230019FEC9 /* WeatherInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF474E2A1547230019FEC9 /* WeatherInteractor.swift */; };
+		B2AF47522A15479A0019FEC9 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47512A15479A0019FEC9 /* Weather.swift */; };
+		B2AF47572A1548230019FEC9 /* Weather+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47562A1548230019FEC9 /* Weather+Response.swift */; };
+		B2AF47592A15484A0019FEC9 /* Weather+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47582A15484A0019FEC9 /* Weather+Main.swift */; };
+		B2AF475B2A1548E70019FEC9 /* Weather+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF475A2A1548E70019FEC9 /* Weather+Error.swift */; };
+		B2AF475D2A154A0E0019FEC9 /* Weather+City.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF475C2A154A0E0019FEC9 /* Weather+City.swift */; };
+		B2AF475F2A154AE20019FEC9 /* Weather+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF475E2A154AE20019FEC9 /* Weather+State.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +41,14 @@
 		B2AF47452A1534D90019FEC9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		B2AF47472A1534D90019FEC9 /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = pull_request_template.md; sourceTree = "<group>"; };
 		B2AF47482A15357A0019FEC9 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		B2AF47492A1544B00019FEC9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		B2AF474E2A1547230019FEC9 /* WeatherInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInteractor.swift; sourceTree = "<group>"; };
+		B2AF47512A15479A0019FEC9 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		B2AF47562A1548230019FEC9 /* Weather+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Response.swift"; sourceTree = "<group>"; };
+		B2AF47582A15484A0019FEC9 /* Weather+Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Main.swift"; sourceTree = "<group>"; };
+		B2AF475A2A1548E70019FEC9 /* Weather+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Error.swift"; sourceTree = "<group>"; };
+		B2AF475C2A154A0E0019FEC9 /* Weather+City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+City.swift"; sourceTree = "<group>"; };
+		B2AF475E2A154AE20019FEC9 /* Weather+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+State.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +99,8 @@
 				B2AF47232A152E1E0019FEC9 /* AppDelegate.swift */,
 				B2AF47252A152E1E0019FEC9 /* SceneDelegate.swift */,
 				B2AF47272A152E1E0019FEC9 /* ViewController.swift */,
+				B2AF47492A1544B00019FEC9 /* Environment.swift */,
+				B2AF474D2A1547100019FEC9 /* Weather */,
 			);
 			path = Compile;
 			sourceTree = "<group>";
@@ -134,6 +152,36 @@
 			path = .github;
 			sourceTree = "<group>";
 		};
+		B2AF474D2A1547100019FEC9 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				B2AF47512A15479A0019FEC9 /* Weather.swift */,
+				B2AF47532A1547DE0019FEC9 /* Classes */,
+				B2AF47502A1547380019FEC9 /* Models */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
+		B2AF47502A1547380019FEC9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B2AF475C2A154A0E0019FEC9 /* Weather+City.swift */,
+				B2AF475E2A154AE20019FEC9 /* Weather+State.swift */,
+				B2AF47562A1548230019FEC9 /* Weather+Response.swift */,
+				B2AF47582A15484A0019FEC9 /* Weather+Main.swift */,
+				B2AF475A2A1548E70019FEC9 /* Weather+Error.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B2AF47532A1547DE0019FEC9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B2AF474E2A1547230019FEC9 /* WeatherInteractor.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,9 +189,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2AF47342A152E1F0019FEC9 /* Build configuration list for PBXNativeTarget "CityWeather" */;
 			buildPhases = (
+				B2AF474B2A1544FF0019FEC9 /* Replace Environment Placeholders */,
 				B2AF471C2A152E1E0019FEC9 /* Sources */,
 				B2AF471D2A152E1E0019FEC9 /* Frameworks */,
 				B2AF471E2A152E1E0019FEC9 /* Resources */,
+				B2AF474C2A1545360019FEC9 /* Restore Environment Placeholders */,
 			);
 			buildRules = (
 			);
@@ -199,13 +249,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B2AF474B2A1544FF0019FEC9 /* Replace Environment Placeholders */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Replace Environment Placeholders";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "source ~/.bash_profile\n\nsed -i '' \"s/\\$OPENWEATHERMAP_API_KEY/$OPENWEATHERMAP_API_KEY/g\" \"${PROJECT_DIR}/Sources/Compile/Environment.swift\"\n";
+		};
+		B2AF474C2A1545360019FEC9 /* Restore Environment Placeholders */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Restore Environment Placeholders";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "source ~/.bash_profile\n\nsed -i '' \"s/$OPENWEATHERMAP_API_KEY/\\$OPENWEATHERMAP_API_KEY/g\" \"${PROJECT_DIR}/Sources/Compile/Environment.swift\"\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B2AF471C2A152E1E0019FEC9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2AF475B2A1548E70019FEC9 /* Weather+Error.swift in Sources */,
 				B2AF47282A152E1E0019FEC9 /* ViewController.swift in Sources */,
+				B2AF47592A15484A0019FEC9 /* Weather+Main.swift in Sources */,
+				B2AF474A2A1544B00019FEC9 /* Environment.swift in Sources */,
+				B2AF47572A1548230019FEC9 /* Weather+Response.swift in Sources */,
+				B2AF475F2A154AE20019FEC9 /* Weather+State.swift in Sources */,
+				B2AF475D2A154A0E0019FEC9 /* Weather+City.swift in Sources */,
+				B2AF474F2A1547230019FEC9 /* WeatherInteractor.swift in Sources */,
 				B2AF47242A152E1E0019FEC9 /* AppDelegate.swift in Sources */,
+				B2AF47522A15479A0019FEC9 /* Weather.swift in Sources */,
 				B2AF47262A152E1E0019FEC9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,7 +454,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.linguri.CityWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -385,7 +482,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.linguri.CityWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
