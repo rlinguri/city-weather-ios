@@ -16,3 +16,12 @@ All notable changes to this project will be documented in this file.
 
 - README.md
 - .gitignore
+
+## [0.1.2] - 2023-05-17
+
+### Added
+
+- Environment struct
+- Script Run build phases
+- Open Weather Models
+- Method to fetch weather
