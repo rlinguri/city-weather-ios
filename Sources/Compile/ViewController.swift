@@ -17,6 +17,9 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    // Test that the api key is loaded from environment
+    print(Environment.OPENWEATHERMAP_API_KEY)
   }
   
 }
