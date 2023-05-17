@@ -1,5 +1,5 @@
 //
-// File:      Environment.swift
+// File:      Weather+Response.swift
 // Package:   CityWeather
 //
 // Author:    Roderic Linguri <938388@cognizant.com>
@@ -13,10 +13,15 @@
 
 import Foundation
 
-/// A namespace to store environment variables
-struct Environment {
+extension Weather {
   
-  /// NOTE: `export OPENWEATHERMAP_API_KEY=<actual-key>` must be in your ~/.bash_profile
-  static let OPENWEATHERMAP_API_KEY = "$OPENWEATHERMAP_API_KEY"
+  /// The root API response object
+  struct Response: Decodable {
+    
+    /// A nested object that contains the data we are interested in
+    let main: Weather.Main
+    
+  }
+  
   
 }

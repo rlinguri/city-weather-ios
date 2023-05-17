@@ -1,5 +1,5 @@
 //
-// File:      Environment.swift
+// File:      Weather.swift
 // Package:   CityWeather
 //
 // Author:    Roderic Linguri <938388@cognizant.com>
@@ -13,10 +13,9 @@
 
 import Foundation
 
-/// A namespace to store environment variables
-struct Environment {
+struct Weather {
   
-  /// NOTE: `export OPENWEATHERMAP_API_KEY=<actual-key>` must be in your ~/.bash_profile
-  static let OPENWEATHERMAP_API_KEY = "$OPENWEATHERMAP_API_KEY"
+  /// Facilitates access to weather interactor in namespaced style
+  typealias Interactor = WeatherInteractor
   
 }
