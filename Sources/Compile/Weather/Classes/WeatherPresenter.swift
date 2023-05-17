@@ -24,8 +24,11 @@ class WeatherPresenter: NSObject {
   /// Weak reference to the viewController until we can implement pub-sub model
   weak var viewController: WeatherViewController?
   
-  /// The subscription to the interactor
-  var subscription: AnyCancellable?
+  /// The subscription to the interactor for the geoCode
+  var geoCodeSubscription: AnyCancellable?
+  
+  /// The subscription to the interactor for the final weather data
+  var weatherSubscription: AnyCancellable?
   
   /// The title for the viewController to use in the navigation bar
   let navigationTitle = Localized.weatherNavigationTitle
@@ -41,6 +44,9 @@ class WeatherPresenter: NSObject {
   
   /// The text to display when no temperature has been fetched
   let defaultTemperatureLabelText = "--"
+  
+  /// Whether or not we should display the spinner
+  var loading: Bool = false
   
   /// The temperature retrieved from the API
   var temperature: Double?
@@ -73,17 +79,34 @@ extension WeatherPresenter: UIPickerViewDelegate {
     didSelectRow row: Int,
     inComponent component: Int
   ) {
-    self.subscription = self.interactor.fetchWeather(forCity: Weather.City.allCases[row])
+    self.loading = true
+    self.geoCodeSubscription = self.interactor.fetchGeoCode(forCity: Weather.cities[row])
       .sink { completion in
         switch completion {
           case .failure(let error):
             self.viewController?.presentErrorAlert(message: error.localizedDescription)
           case .finished:
-            print("fetch weather complete")
+            print("fetch geocode complete")
         }
       } receiveValue: { response in
-        self.temperature = response.main.fahrenheitTemperature
-        self.viewController?.updateView()
+        if let city = response.first {
+          self.weatherSubscription = self.interactor.fetchWeather(forCity: city)
+            .sink { completion in
+              switch completion {
+                case .failure(let error):
+                  self.loading = false
+                  self.temperature = nil
+                  self.viewController?.updateView()
+                  self.viewController?.presentErrorAlert(message: error.localizedDescription)
+                case .finished:
+                  print("fetch weather complete")
+              }
+            } receiveValue: { response in
+              self.temperature = response.main.fahrenheitTemperature
+              self.loading = false
+              self.viewController?.updateView()
+            }
+        }
       }
   }
   
@@ -108,14 +131,14 @@ extension WeatherPresenter: UIPickerViewDataSource {
       title = self.selectCityTitle
     } else {
       attributes[.foregroundColor] = UIColor.darkText
-      title = Weather.City.allCases[row].stringValue
+      title = Weather.cities[row].name
     }
     
     return NSAttributedString(string: title, attributes: attributes)
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return Weather.City.allCases.count + 1
+    return Weather.cities.count + 1
   }
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {

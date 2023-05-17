@@ -11,7 +11,7 @@
 //            Swift 5.0
 //
 
-import Foundation
+import UIKit
 
 struct Weather {
   
@@ -33,5 +33,18 @@ struct Weather {
     let viewController = WeatherViewController(presenter: presenter)
     presenter.viewController = viewController
     return viewController
+  }
+  
+  /// A list of all the cities the app can fetch weather for
+  static var cities: [Weather.Request] {
+    var result = [Weather.Request]()
+    if let data = NSDataAsset(name: "Cities")?.data {
+      do {
+        result = try JSONDecoder().decode([Weather.Request].self, from: data)
+      } catch {
+        result = [Weather.Request]()
+      }
+    }
+    return result
   }
 }

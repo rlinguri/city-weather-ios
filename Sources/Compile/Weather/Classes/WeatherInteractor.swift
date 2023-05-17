@@ -21,9 +21,8 @@ class WeatherInteractor {
   /// - Parameter city: The enumerated city case
   ///
   /// - Returns: A publisher for a weather response object
-  func fetchWeather(forCity city: Weather.City) -> AnyPublisher<Weather.Response, Error> {
-    guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(city.urlEncoded)&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
-      print("Error: Could not form URL for city \(city.stringValue) at index \(city.rawValue).")
+  func fetchWeather(forCity city: Weather.GeoDirectResponse) -> AnyPublisher<Weather.Response, Error> {
+    guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(city.lat)&lon=\(city.lon)&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
       return Fail(error: URLError(.badURL))
         .eraseToAnyPublisher()
     }
@@ -48,6 +47,40 @@ class WeatherInteractor {
         return output.data
       }
       .decode(type: Weather.Response.self, decoder: JSONDecoder())
+      .receive(on: RunLoop.main)
+      .eraseToAnyPublisher()
+  }
+  
+  func fetchGeoCode(
+    forCity request: Weather.Request
+  ) -> AnyPublisher<[Weather.GeoDirectResponse], Error>
+  {
+    
+    guard let city = request.name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+          let state = request.state.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+          let country = request.country.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+          let url = URL(string: "https://api.openweathermap.org/geo/1.0/direct?q=\(city),\(state),\(country)&limit=1&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
+      return Fail(error: URLError(.badURL))
+        .eraseToAnyPublisher()
+    }
+    
+    return URLSession.shared.dataTaskPublisher(for: url)
+      .tryMap() { output -> Data in
+        guard let httpResponse = output.response as? HTTPURLResponse else {
+          throw URLError(.networkConnectionLost)
+        }
+        
+        guard httpResponse.statusCode == 200 else {
+          throw URLError(.badServerResponse)
+        }
+        
+        guard let jsonStr = String(data: output.data, encoding: .utf8) else {
+          throw URLError(.cannotDecodeRawData)
+        }
+        
+        return output.data
+      }
+      .decode(type: [Weather.GeoDirectResponse].self, decoder: JSONDecoder())
       .receive(on: RunLoop.main)
       .eraseToAnyPublisher()
   }

@@ -20,10 +20,11 @@
 		B2AF47522A15479A0019FEC9 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47512A15479A0019FEC9 /* Weather.swift */; };
 		B2AF47572A1548230019FEC9 /* Weather+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47562A1548230019FEC9 /* Weather+Response.swift */; };
 		B2AF47592A15484A0019FEC9 /* Weather+Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47582A15484A0019FEC9 /* Weather+Main.swift */; };
-		B2AF475D2A154A0E0019FEC9 /* Weather+City.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF475C2A154A0E0019FEC9 /* Weather+City.swift */; };
 		B2AF47612A1553780019FEC9 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47602A1553780019FEC9 /* WeatherViewController.swift */; };
 		B2AF47632A1554310019FEC9 /* WeatherPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47622A1554310019FEC9 /* WeatherPresenter.swift */; };
 		B2AF476A2A1556C80019FEC9 /* Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AF47692A1556C80019FEC9 /* Localized.swift */; };
+		B2B84E352A1569C800E0423A /* Weather+Geo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B84E342A1569C800E0423A /* Weather+Geo.swift */; };
+		B2B84E372A15772D00E0423A /* Weather+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B84E362A15772D00E0423A /* Weather+Request.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,10 +48,11 @@
 		B2AF47512A15479A0019FEC9 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		B2AF47562A1548230019FEC9 /* Weather+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Response.swift"; sourceTree = "<group>"; };
 		B2AF47582A15484A0019FEC9 /* Weather+Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Main.swift"; sourceTree = "<group>"; };
-		B2AF475C2A154A0E0019FEC9 /* Weather+City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+City.swift"; sourceTree = "<group>"; };
 		B2AF47602A1553780019FEC9 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		B2AF47622A1554310019FEC9 /* WeatherPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresenter.swift; sourceTree = "<group>"; };
 		B2AF47692A1556C80019FEC9 /* Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localized.swift; sourceTree = "<group>"; };
+		B2B84E342A1569C800E0423A /* Weather+Geo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Geo.swift"; sourceTree = "<group>"; };
+		B2B84E362A15772D00E0423A /* Weather+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weather+Request.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,9 +169,10 @@
 		B2AF47502A1547380019FEC9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B2AF475C2A154A0E0019FEC9 /* Weather+City.swift */,
 				B2AF47562A1548230019FEC9 /* Weather+Response.swift */,
 				B2AF47582A15484A0019FEC9 /* Weather+Main.swift */,
+				B2B84E342A1569C800E0423A /* Weather+Geo.swift */,
+				B2B84E362A15772D00E0423A /* Weather+Request.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,14 +307,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2B84E372A15772D00E0423A /* Weather+Request.swift in Sources */,
 				B2AF47612A1553780019FEC9 /* WeatherViewController.swift in Sources */,
 				B2AF47282A152E1E0019FEC9 /* ViewController.swift in Sources */,
 				B2AF47592A15484A0019FEC9 /* Weather+Main.swift in Sources */,
 				B2AF474A2A1544B00019FEC9 /* Environment.swift in Sources */,
 				B2AF476A2A1556C80019FEC9 /* Localized.swift in Sources */,
 				B2AF47572A1548230019FEC9 /* Weather+Response.swift in Sources */,
+				B2B84E352A1569C800E0423A /* Weather+Geo.swift in Sources */,
 				B2AF47632A1554310019FEC9 /* WeatherPresenter.swift in Sources */,
-				B2AF475D2A154A0E0019FEC9 /* Weather+City.swift in Sources */,
 				B2AF474F2A1547230019FEC9 /* WeatherInteractor.swift in Sources */,
 				B2AF47242A152E1E0019FEC9 /* AppDelegate.swift in Sources */,
 				B2AF47522A15479A0019FEC9 /* Weather.swift in Sources */,

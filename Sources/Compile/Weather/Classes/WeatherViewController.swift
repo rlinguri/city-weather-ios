@@ -92,6 +92,11 @@ class WeatherViewController: UIViewController {
   }
   
   func updateView() {
+    if self.presenter.loading == true {
+      self.spinner.startAnimating()
+    } else {
+      self.spinner.stopAnimating()
+    }
     self.temperatureLabel.text = self.presenter.temperatureText
   }
   
