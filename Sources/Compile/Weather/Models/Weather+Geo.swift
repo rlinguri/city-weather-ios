@@ -15,14 +15,14 @@ import UIKit
 
 extension Weather {
   
-  struct GeoDirectResponse: Decodable {
+  struct GeoResponse: Decodable {
     
     let name: String
     
     let lat: Double
     
     let lon: Double
-        
+    
   }
   
 }

@@ -21,7 +21,7 @@ class WeatherInteractor {
   /// - Parameter city: The enumerated city case
   ///
   /// - Returns: A publisher for a weather response object
-  func fetchWeather(forCity city: Weather.GeoDirectResponse) -> AnyPublisher<Weather.Response, Error> {
+  func fetchWeather(forCity city: Weather.GeoResponse) -> AnyPublisher<Weather.Response, Error> {
     guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(city.lat)&lon=\(city.lon)&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
       return Fail(error: URLError(.badURL))
         .eraseToAnyPublisher()
@@ -53,7 +53,7 @@ class WeatherInteractor {
   
   func fetchGeoCode(
     forCity request: Weather.Request
-  ) -> AnyPublisher<[Weather.GeoDirectResponse], Error>
+  ) -> AnyPublisher<[Weather.GeoResponse], Error>
   {
     
     guard let city = request.name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
@@ -80,7 +80,7 @@ class WeatherInteractor {
         
         return output.data
       }
-      .decode(type: [Weather.GeoDirectResponse].self, decoder: JSONDecoder())
+      .decode(type: [Weather.GeoResponse].self, decoder: JSONDecoder())
       .receive(on: RunLoop.main)
       .eraseToAnyPublisher()
   }

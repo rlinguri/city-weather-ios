@@ -51,6 +51,8 @@ class WeatherPresenter: NSObject {
   /// The temperature retrieved from the API
   var temperature: Double?
   
+  let missingAPIKeyMessage = "API Key is missing. Please follow the instructions in the README!"
+  
   /// The computed text to display in the temperature label
   var temperatureText: String {
     if let temperature = self.temperature {

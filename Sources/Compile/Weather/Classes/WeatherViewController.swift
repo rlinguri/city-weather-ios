@@ -20,7 +20,7 @@ class WeatherViewController: UIViewController {
   
   /// The view model
   let presenter: WeatherPresenter
-    
+  
   // MARK: - Outlets / Subviews
   
   /// The label that dispays the temperature
@@ -121,7 +121,7 @@ class WeatherViewController: UIViewController {
     alertController.addAction(action)
     self.present(alertController, animated: true, completion: nil)
   }
-
+  
   // MARK: - UIViewController Implementation
   
   required init?(coder: NSCoder) {
@@ -137,6 +137,10 @@ class WeatherViewController: UIViewController {
     self.setupSubviews()
     self.setupConstraints()
     self.updateView()
+    
+    if Environment.OPENWEATHERMAP_API_KEY == "$OPENWEATHERMAP_API_KEY" {
+      self.presentErrorAlert(message: self.presenter.missingAPIKeyMessage)
+    }
   }
   
 }

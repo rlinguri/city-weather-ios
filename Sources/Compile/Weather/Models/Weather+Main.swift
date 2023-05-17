@@ -25,7 +25,7 @@ extension Weather {
     var fahrenheitTemperature: Double {
       return 1.8 * (self.temp - 273) + 32
     }
-
+    
   }
   
 }

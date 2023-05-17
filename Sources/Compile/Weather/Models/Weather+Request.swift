@@ -16,8 +16,11 @@ import Foundation
 extension Weather {
   
   struct Request: Codable {
+    
     let name: String
+    
     let state: String
+    
     let country: String
   }
   
