@@ -30,6 +30,9 @@
 		B2AF473F2A1530310019FEC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B2AF47422A1530D20019FEC9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B2AF47432A1530D20019FEC9 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B2AF47452A1534D90019FEC9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		B2AF47472A1534D90019FEC9 /* pull_request_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = pull_request_template.md; sourceTree = "<group>"; };
+		B2AF47482A15357A0019FEC9 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,10 +117,21 @@
 		B2AF47412A1530630019FEC9 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B2AF47462A1534D90019FEC9 /* .github */,
+				B2AF47452A1534D90019FEC9 /* .gitignore */,
+				B2AF47482A15357A0019FEC9 /* CHANGELOG.md */,
 				B2AF47432A1530D20019FEC9 /* LICENSE */,
 				B2AF47422A1530D20019FEC9 /* README.md */,
 			);
 			name = Repository;
+			sourceTree = "<group>";
+		};
+		B2AF47462A1534D90019FEC9 /* .github */ = {
+			isa = PBXGroup;
+			children = (
+				B2AF47472A1534D90019FEC9 /* pull_request_template.md */,
+			);
+			path = .github;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
