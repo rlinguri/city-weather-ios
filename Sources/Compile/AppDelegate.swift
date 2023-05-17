@@ -15,7 +15,7 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder {
-
+  
 }
 
 extension AppDelegate: UIApplicationDelegate {
@@ -41,7 +41,7 @@ extension AppDelegate: UIApplicationDelegate {
   }
   
   func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-
+    
   }
-
+  
 }
