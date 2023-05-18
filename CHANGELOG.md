@@ -29,3 +29,10 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - SceneDelegate to load weather module
+
+## [0.1.3] - 2023-05-18
+
+### Added
+
+- API Interaction
+- Caching of Data
