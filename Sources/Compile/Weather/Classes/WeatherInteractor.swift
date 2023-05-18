@@ -25,7 +25,9 @@ class WeatherInteractor {
   func fetchGeocode(
     forCityName name: String
   ) {
-    guard let url = URL(string: "https://api.openweathermap.org/geo/1.0/direct?q=\(name)&limit=5&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
+    guard let query = name.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) else { return }
+    
+    guard let url = URL(string: "https://api.openweathermap.org/geo/1.0/direct?q=\(query)&limit=5&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
       self.router?.dispatch(
         action: .didEncounterError,
         payload: Weather.Payload(error: .unknown) // @TODO: Add .badURL case
@@ -45,7 +47,7 @@ class WeatherInteractor {
         let geocodes = try JSONDecoder().decode([Weather.GeocodeResponse].self, from: data)
         self.router?.dispatch(
           action: .didReceiveGeocodes,
-          payload: Weather.Payload(geocodes: geocodes)
+          payload: Weather.Payload(city: name, geocodes: geocodes)
         )
       } catch {
         self.router?.dispatch(
@@ -95,6 +97,30 @@ class WeatherInteractor {
     .resume()
   }
   
+  /// Retrieve the icon image for current weathe conditions
+  ///
+  /// Note: Ordinarily instead of hardcoding "@2x", I would make this dependent on the
+  /// traitCollection's displayScale property.
+  ///
+  /// - Parameter code: The string code provided by openweather
+  func fetchIcon(
+    forIconCode code: String
+  ) {
+    guard let url = URL(string: "https://openweathermap.org/img/wn/\(code)@2x.png") else {
+      return
+    }
+    
+    do {
+      let data = try Data(contentsOf: url)
+      let imageData = Weather.ImageData(code: code, data: data)
+      self.router?.dispatch(
+        action: .didReceiveImage,
+        payload: Weather.Payload(image: imageData)
+      )
+    } catch {
+      print("@TODO: No Image returned from API, use a default image rather than dispatching error")
+    }
+  }
   
   /// Posts a notification to NotificationCenter
   ///

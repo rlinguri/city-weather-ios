@@ -23,6 +23,7 @@ extension Weather {
     case didEnterCity
     case didReceiveGeocodes
     case didReceiveWeather
+    case didReceiveImage
     case didEncounterError
     
     /// The action converted to a `Notification.Name` instance

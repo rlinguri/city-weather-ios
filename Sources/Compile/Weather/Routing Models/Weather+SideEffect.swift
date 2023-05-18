@@ -24,8 +24,10 @@ extension Weather {
     case updateView
     case saveCity
     case saveGeocode
+    case saveImage
     case fetchGeocoding
     case fetchWeather
+    case fetchImage
     case loadEntity
     case postNotification
     
@@ -47,7 +49,10 @@ extension Weather {
         case .setLoadingFalse:
           router?.viewController?.presenter.loading = false
         case .updateView:
-          router?.viewController?.presenter.weatherDataText = "\(String(describing: event.state.current))"
+          if let icon = event.state.current?.weather.first?.icon {
+            router?.viewController?.presenter.currentImage = router?.entity?.imageForCode(code: icon)
+          }
+          router?.viewController?.presenter.weatherDataText = "\(String(describing: event.state))"
           router?.viewController?.updateView()
         case .saveCity:
           router?.entity?.savedCity = event.state.city
@@ -63,6 +68,13 @@ extension Weather {
           }
           router?.entity?.savedGeocode = geoCodeToSave
           router?.entity?.save()
+        case .saveImage:
+          if let icon = event.state.current?.weather.first?.icon {
+            router?.viewController?.presenter.currentImage = router?.entity?.imageForCode(code: icon)
+          }
+          router?.entity?.imageData = event.state.images
+          
+          router?.entity?.save()
         case .postNotification:
           router?.interactor.postNotification(event: event)
         case .fetchGeocoding:
@@ -71,7 +83,7 @@ extension Weather {
               action: .didEncounterError,
               payload: Weather.Payload(error: .missingDependency)
             )
-            return 
+            return
           }
           router?.interactor.fetchGeocode(forCityName: city)
         case .fetchWeather:
@@ -83,6 +95,12 @@ extension Weather {
             return
           }
           router?.interactor.fetchWeather(forGeocode: geocode)
+        case .fetchImage:
+          guard let icon = event.state.current?.weather.first?.icon else {
+            // Don't alert the user if we can't download an image
+            return
+          }
+          router?.interactor.fetchIcon(forIconCode: icon)
         case .loadEntity:
           router?.entity?.load()
       }

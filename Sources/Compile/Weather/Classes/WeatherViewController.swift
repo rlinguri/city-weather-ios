@@ -53,6 +53,13 @@ class WeatherViewController: UIViewController {
     return view
   }()
   
+  let iconView: UIImageView = {
+    let view = UIImageView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.contentMode = .scaleAspectFit
+    return view
+  }()
+  
   // Temporarily will display raw data that the UI will use
   let weatherView: UITextView = {
     let view = UITextView()
@@ -98,6 +105,8 @@ class WeatherViewController: UIViewController {
     self.view.addSubview(self.searchField)
     
     self.view.addSubview(self.weatherView)
+    
+    self.view.addSubview(self.iconView)
     
     self.view.addSubview(self.spinner)
   }
@@ -150,11 +159,23 @@ class WeatherViewController: UIViewController {
         equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
         constant: self.presenter.spacing * -1
       ),
+      
+      self.iconView.heightAnchor.constraint(equalToConstant: 120.0),
+      self.iconView.widthAnchor.constraint(equalToConstant: 120.0),
+      
+      self.iconView.centerXAnchor.constraint(
+        equalTo: self.view.safeAreaLayoutGuide.centerXAnchor
+      ),
+      self.iconView.centerYAnchor.constraint(
+        equalTo: self.view.safeAreaLayoutGuide.centerYAnchor,
+        constant: -60.0
+      ),
       self.spinner.centerXAnchor.constraint(
         equalTo: self.view.safeAreaLayoutGuide.centerXAnchor
       ),
       self.spinner.centerYAnchor.constraint(
-        equalTo: self.view.safeAreaLayoutGuide.centerYAnchor
+        equalTo: self.view.safeAreaLayoutGuide.centerYAnchor,
+        constant: 60.0
       )
     ]
     
@@ -175,6 +196,8 @@ class WeatherViewController: UIViewController {
       }
       
       self.weatherView.text = self.presenter.weatherDataText
+      
+      self.iconView.image = self.presenter.currentImage
     }
   }
   

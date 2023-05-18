@@ -34,6 +34,7 @@ extension Weather {
     switch action {
       case .didEncounterError:
         updatedState = state.update(withPayload: payload)
+        // @TODO: Error handling. Which errors do we display to the user?
         sideEffects.append(.void)
       case .entityDidLoad:
         updatedState = state.update(withPayload: payload)
@@ -56,6 +57,12 @@ extension Weather {
       case .didReceiveWeather:
         updatedState = state.update(withPayload: payload)
         sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.fetchImage)
+        sideEffects.append(.updateView)
+      case .didReceiveImage:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.saveImage)
         sideEffects.append(.updateView)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
@@ -85,11 +92,20 @@ fileprivate extension Weather.State {
       updatedErrors.append(error)
     }
     
+    var updatedImages = self.images
+    if let image = payload.image {
+      let exists = self.images.contains { $0.code == image.code }
+      if !exists {
+        updatedImages.append(image)
+      }
+    }
+    
     return Weather.State(
       isViewConfigured: self.isViewConfigured,
-      city: payload.city,
-      geocodes: payload.geocodes,
-      current: payload.current,
+      city: payload.city ?? self.city,
+      geocodes: payload.geocodes ?? self.geocodes,
+      current: payload.current ?? self.current,
+      images: updatedImages,
       errors: updatedErrors
     )
   }
@@ -112,9 +128,10 @@ fileprivate extension Weather.State {
     
     return Weather.State(
       isViewConfigured: isViewConfigured ?? self.isViewConfigured,
-      city: nil,
-      geocodes: nil,
-      current: nil,
+      city: self.city,
+      geocodes: self.geocodes,
+      current: self.current,
+      images: self.images,
       errors: updatedErrors
     )
   }

@@ -35,6 +35,8 @@ extension Weather {
     /// The current weather conditions and data response
     let current: Weather.CurrentResponse?
     
+    let images: [Weather.ImageData]
+    
     /// An array of errors
     let errors: [Weather.Error]
     
@@ -45,6 +47,7 @@ extension Weather {
         city: nil,
         geocodes: nil,
         current: nil,
+        images: [],
         errors: []
       )
     }
@@ -59,6 +62,7 @@ extension Weather {
       city: String?,
       geocodes: [Weather.GeocodeResponse]?,
       current: Weather.CurrentResponse?,
+      images: [Weather.ImageData],
       errors: [Weather.Error]
     ) {
       self.timestamp = Date().timeIntervalSince1970
@@ -66,6 +70,7 @@ extension Weather {
       self.city = city
       self.geocodes = geocodes
       self.current = current
+      self.images = images
       self.errors = errors
     }
   }

@@ -24,6 +24,8 @@ extension Weather {
     
     let current: Weather.CurrentResponse?
     
+    let image: Weather.ImageData?
+    
     /// The error that occurred
     let error: Weather.Error?
     
@@ -34,11 +36,13 @@ extension Weather {
       city: String? = nil,
       geocodes: [Weather.GeocodeResponse]? = nil,
       current: Weather.CurrentResponse? = nil,
+      image: Weather.ImageData? = nil,
       error: Weather.Error? = nil
     ) {
       self.city = city
       self.geocodes = geocodes
       self.current = current
+      self.image = image
       self.error = error
     }
     
