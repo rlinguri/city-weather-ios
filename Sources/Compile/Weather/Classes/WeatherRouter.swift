@@ -15,16 +15,16 @@ import UIKit
 
 /// A reactive store
 class WeatherRouter {
-
+  
   /// The component that handles extra-module interaction
   let interactor: WeatherInteractor
-
+  
   /// The module's view controller
   weak var viewController: WeatherViewController?
-
+  
   /// The component that handles data persistence and retrieval
   weak var entity: WeatherEntity?
-
+  
   /// The module's current state
   var state: Weather.State = Weather.State.initial
   
@@ -68,15 +68,17 @@ class WeatherRouter {
         // Update state property
         self.state = reduced.state
         
-        Weather.Middleware.preExecute(event: event.update(state: reduced.state))
+        let updatedEvent = event.update(state: reduced.state)
+        
+        Weather.Middleware.preExecute(event: updatedEvent)
         
         // Execute the sideEffects
         for sideEffect in reduced.sideEffects {
-					sideEffect.execute(router: self, event: event) {
-						Weather.Middleware.postExecute(
-							event: event.update(state: self.state)
-						)
-					}
+          sideEffect.execute(router: self, event: updatedEvent) {
+            Weather.Middleware.postExecute(
+              event: event.update(state: self.state)
+            )
+          }
         }
       }
       

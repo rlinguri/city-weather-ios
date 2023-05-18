@@ -22,6 +22,11 @@ extension Weather {
     case setLoadingTrue
     case setLoadingFalse
     case updateView
+    case saveCity
+    case saveGeocode
+    case fetchGeocoding
+    case fetchWeather
+    case loadEntity
     case postNotification
     
     /// Execute the side effect on the router
@@ -34,13 +39,6 @@ extension Weather {
       event: Weather.Event,
       completion: (() -> Void)? = nil
     ) {
-      print("execute \(self)")
-      if router?.viewController == nil {
-        print("no viewController")
-      } else if router?.viewController?.presenter == nil {
-        print("no presenter")
-      }
-      
       switch self {
         case .void:
           break
@@ -50,8 +48,22 @@ extension Weather {
           router?.viewController?.presenter.loading = false
         case .updateView:
           router?.viewController?.updateView()
+        case .saveCity:
+          router?.entity?.savedCity = event.state.city
+          router?.entity?.save()
+        case .saveGeocode:
+          // @TODO Add geocode to state so we can save it
+          break
         case .postNotification:
           router?.interactor.postNotification(event: event)
+        case .fetchGeocoding:
+          // @TODO: Call in interactor
+          break
+        case .fetchWeather:
+          // @TODO: Call in interactor
+          break
+        case .loadEntity:
+          router?.entity?.load()
       }
       
       completion?()

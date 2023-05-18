@@ -19,6 +19,7 @@ extension Weather {
   enum Action: String {
     
     case didConfigureView
+    case entityDidLoad
     case didEnterCity
     case didEncounterError
     

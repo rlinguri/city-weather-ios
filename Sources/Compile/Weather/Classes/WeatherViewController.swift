@@ -52,7 +52,7 @@ class WeatherViewController: UIViewController {
     view.layer.cornerRadius = 9.0
     return view
   }()
-
+  
   // Temporarily will display raw data that the UI will use
   let weatherView: UITextView = {
     let view = UITextView()
@@ -169,6 +169,11 @@ class WeatherViewController: UIViewController {
       } else {
         self.spinner.stopAnimating()
       }
+      
+      if let savedCity = self.presenter.entity.savedCity {
+        self.searchField.text = savedCity
+      }
+      
       self.weatherView.text = self.presenter.weatherDataText
     }
   }

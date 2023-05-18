@@ -35,12 +35,24 @@ extension Weather {
       case .didEncounterError:
         updatedState = state.update(withPayload: payload)
         sideEffects.append(.void)
+      case .entityDidLoad:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.updateView)
+        
+        // @TODO, see if we already have geocode cached for the city
+        if payload.city != nil {
+          sideEffects.append(.fetchGeocoding)
+        }
       case .didEnterCity:
         updatedState = state.update(withPayload: payload)
         sideEffects.append(.setLoadingTrue)
+        sideEffects.append(.saveCity)
         sideEffects.append(.updateView)
+        sideEffects.append(.fetchGeocoding)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
+        sideEffects.append(.loadEntity)
         sideEffects.append(.setLoadingFalse)
         sideEffects.append(.updateView)
     }

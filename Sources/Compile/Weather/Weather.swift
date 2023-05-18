@@ -22,6 +22,12 @@ struct Weather {
   
   // MARK: - Types
   
+  enum Key {
+    
+    static let savedCity: String = "SAVED_CITY"
+    
+  }
+  
   enum Label {
     
     static var dispatch: String {
