@@ -8,7 +8,7 @@ _A weather-based app where users can look up the weather for a city._
 | Author     | Roderic Linguri <938388@cognozant.com>    |
 | Copyright  | © 2023 Roderic Linguri                    |
 | License    | [MIT](../../blob/develop/LICENSE)         |
-| Version    | 0.1.1 (Pre-Release)                       |
+| Version    | 0.1.2 (Pre-Release)                       |
 | Requires   | Xcode 14, iOS 15.6, Swift 5.0             |
 
 ### Getting Started ###
