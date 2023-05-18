@@ -110,7 +110,7 @@ extension Weather {
         case .presentAlert:
           var message = "An unknown error has occurred"
           if let error = event.state.errors.last {
-            message = error.localizedDescription
+            message = error.message
           }
           router?.viewController?.presentErrorAlert(message: message)
         case .postNotification:
