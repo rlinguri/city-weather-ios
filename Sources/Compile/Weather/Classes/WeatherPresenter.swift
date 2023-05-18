@@ -34,8 +34,11 @@ class WeatherPresenter {
   /// The label for the search field
   let searchFieldLabel = Localized.enterCityTitle
   
-  /// Wehen we receive weather data, set it here before updating the view
+  /// When we receive weather data, set it here before updating the view
   var weatherDataText: String?
+  
+  /// If we have an image for current weather data, set it here
+  var currentImage: UIImage?
   
   /// Initialize the presenter with an entity
   ///

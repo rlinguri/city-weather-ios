@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -24,8 +24,10 @@ extension Weather {
     case updateView
     case saveCity
     case saveGeocode
+    case saveImage
     case fetchGeocoding
     case fetchWeather
+    case fetchImage
     case loadEntity
     case postNotification
     
@@ -47,21 +49,58 @@ extension Weather {
         case .setLoadingFalse:
           router?.viewController?.presenter.loading = false
         case .updateView:
+          if let icon = event.state.current?.weather.first?.icon {
+            router?.viewController?.presenter.currentImage = router?.entity?.imageForCode(code: icon)
+          }
+          router?.viewController?.presenter.weatherDataText = "\(String(describing: event.state))"
           router?.viewController?.updateView()
         case .saveCity:
           router?.entity?.savedCity = event.state.city
           router?.entity?.save()
         case .saveGeocode:
-          // @TODO Add geocode to state so we can save it
-          break
+          // @TODO: Probably need to implement another UI piece that enables the user to select one of the geocodes. For now, this is not in the requirements
+          guard let geoCodeToSave = event.state.geocodes?.first else {
+            router?.dispatch(
+              action: .didEncounterError,
+              payload: Weather.Payload(error: .missingDependency)
+            )
+            return
+          }
+          router?.entity?.savedGeocode = geoCodeToSave
+          router?.entity?.save()
+        case .saveImage:
+          if let icon = event.state.current?.weather.first?.icon {
+            router?.viewController?.presenter.currentImage = router?.entity?.imageForCode(code: icon)
+          }
+          router?.entity?.imageData = event.state.images
+          
+          router?.entity?.save()
         case .postNotification:
           router?.interactor.postNotification(event: event)
         case .fetchGeocoding:
-          // @TODO: Call in interactor
-          break
+          guard let city = event.state.city else {
+            router?.dispatch(
+              action: .didEncounterError,
+              payload: Weather.Payload(error: .missingDependency)
+            )
+            return
+          }
+          router?.interactor.fetchGeocode(forCityName: city)
         case .fetchWeather:
-          // @TODO: Call in interactor
-          break
+          guard let geocode = event.state.geocodes?.first else {
+            router?.dispatch(
+              action: .didEncounterError,
+              payload: Weather.Payload(error: .missingDependency)
+            )
+            return
+          }
+          router?.interactor.fetchWeather(forGeocode: geocode)
+        case .fetchImage:
+          guard let icon = event.state.current?.weather.first?.icon else {
+            // Don't alert the user if we can't download an image
+            return
+          }
+          router?.interactor.fetchIcon(forIconCode: icon)
         case .loadEntity:
           router?.entity?.load()
       }

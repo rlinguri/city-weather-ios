@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -26,8 +26,16 @@ extension Weather {
     /// Whether or not view setup tasks are complete
     let isViewConfigured: Bool
     
-    /// The city that we arecurrently fetching weather for
+    /// The city that we are currently fetching weather for
     let city: String?
+    
+    /// The array of geocodes for a given city
+    let geocodes: [GeocodeResponse]?
+    
+    /// The current weather conditions and data response
+    let current: Weather.CurrentResponse?
+    
+    let images: [Weather.ImageData]
     
     /// An array of errors
     let errors: [Weather.Error]
@@ -37,6 +45,9 @@ extension Weather {
       return Weather.State(
         isViewConfigured: false,
         city: nil,
+        geocodes: nil,
+        current: nil,
+        images: [],
         errors: []
       )
     }
@@ -49,11 +60,17 @@ extension Weather {
     init(
       isViewConfigured: Bool,
       city: String?,
+      geocodes: [Weather.GeocodeResponse]?,
+      current: Weather.CurrentResponse?,
+      images: [Weather.ImageData],
       errors: [Weather.Error]
     ) {
       self.timestamp = Date().timeIntervalSince1970
       self.isViewConfigured = isViewConfigured
       self.city = city
+      self.geocodes = geocodes
+      self.current = current
+      self.images = images
       self.errors = errors
     }
   }
@@ -62,6 +79,8 @@ extension Weather {
 
 extension Weather.State: Equatable {
   
+  /// Used in tests!
+  /// // @TODO: Make georequest and current weather equatable to add into this
   static func == (lhs: Weather.State, rhs: Weather.State) -> Bool {
     return lhs.isViewConfigured == rhs.isViewConfigured &&
     lhs.city == rhs.city &&

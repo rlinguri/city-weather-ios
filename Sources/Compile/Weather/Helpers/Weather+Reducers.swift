@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -34,6 +34,7 @@ extension Weather {
     switch action {
       case .didEncounterError:
         updatedState = state.update(withPayload: payload)
+        // @TODO: Error handling. Which errors do we display to the user?
         sideEffects.append(.void)
       case .entityDidLoad:
         updatedState = state.update(withPayload: payload)
@@ -50,6 +51,19 @@ extension Weather {
         sideEffects.append(.saveCity)
         sideEffects.append(.updateView)
         sideEffects.append(.fetchGeocoding)
+      case .didReceiveGeocodes:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.fetchWeather)
+      case .didReceiveWeather:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.fetchImage)
+        sideEffects.append(.updateView)
+      case .didReceiveImage:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.saveImage)
+        sideEffects.append(.updateView)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
         sideEffects.append(.loadEntity)
@@ -78,14 +92,25 @@ fileprivate extension Weather.State {
       updatedErrors.append(error)
     }
     
+    var updatedImages = self.images
+    if let image = payload.image {
+      let exists = self.images.contains { $0.code == image.code }
+      if !exists {
+        updatedImages.append(image)
+      }
+    }
+    
     return Weather.State(
       isViewConfigured: self.isViewConfigured,
-      city: payload.city,
+      city: payload.city ?? self.city,
+      geocodes: payload.geocodes ?? self.geocodes,
+      current: payload.current ?? self.current,
+      images: updatedImages,
       errors: updatedErrors
     )
   }
   
-  /// Enables updating of state properties
+  /// Enables updating of state properties without a payload
   ///
   /// - Parameters:
   ///   - isViewConfigured: Whether or not the view is configured
@@ -94,7 +119,6 @@ fileprivate extension Weather.State {
   /// - Returns: The updated state
   func update(
     isViewConfigured: Bool? = nil,
-    city: String? = nil,
     error: Weather.Error? = nil
   ) -> Weather.State {
     var updatedErrors = self.errors
@@ -104,7 +128,10 @@ fileprivate extension Weather.State {
     
     return Weather.State(
       isViewConfigured: isViewConfigured ?? self.isViewConfigured,
-      city: city ?? self.city,
+      city: self.city,
+      geocodes: self.geocodes,
+      current: self.current,
+      images: self.images,
       errors: updatedErrors
     )
   }

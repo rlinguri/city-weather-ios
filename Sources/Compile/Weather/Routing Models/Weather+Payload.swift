@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -20,6 +20,12 @@ extension Weather {
     
     let city: String?
     
+    let geocodes: [Weather.GeocodeResponse]?
+    
+    let current: Weather.CurrentResponse?
+    
+    let image: Weather.ImageData?
+    
     /// The error that occurred
     let error: Weather.Error?
     
@@ -28,9 +34,15 @@ extension Weather {
     /// - Parameter error: An error to dispatch
     init(
       city: String? = nil,
+      geocodes: [Weather.GeocodeResponse]? = nil,
+      current: Weather.CurrentResponse? = nil,
+      image: Weather.ImageData? = nil,
       error: Weather.Error? = nil
     ) {
       self.city = city
+      self.geocodes = geocodes
+      self.current = current
+      self.image = image
       self.error = error
     }
     
