@@ -205,23 +205,25 @@ class WeatherViewController: UIViewController {
   ///
   /// - Parameter message: The string to display as the alert's message
   func presentErrorAlert(message: String) {
-    let alertController = UIAlertController(
-      title: self.presenter.errorAlertTitle,
-      message: message,
-      preferredStyle: .alert
-    )
-    let action = UIAlertAction(
-      title: self.presenter.okButtonActionTitle,
-      style: .default
-    ) { [weak self] action in
-      self?.dismiss(animated: true) {
-        self?.searchField.text = nil
-        self?.weatherView.text = nil
-        self!.iconView.image = nil
+    DispatchQueue.main.async {
+      let alertController = UIAlertController(
+        title: self.presenter.errorAlertTitle,
+        message: message,
+        preferredStyle: .alert
+      )
+      let action = UIAlertAction(
+        title: self.presenter.okButtonActionTitle,
+        style: .default
+      ) { [weak self] action in
+        self?.dismiss(animated: true) {
+          self?.searchField.text = nil
+          self?.weatherView.text = nil
+          self!.iconView.image = nil
+        }
       }
+      alertController.addAction(action)
+      self.present(alertController, animated: true, completion: nil)
     }
-    alertController.addAction(action)
-    self.present(alertController, animated: true, completion: nil)
   }
   
   // MARK: - UIViewController
@@ -249,7 +251,12 @@ class WeatherViewController: UIViewController {
     
     self.updateView()
     
-    if self.presenter.weatherDataText == nil {
+    if Environment.OPENWEATHERMAP_API_KEY == "$OPENWEATHERMAP_API_KEY" {
+      self.router.dispatch(
+        action: .didEncounterError,
+        payload: Weather.Payload(error: .missingAPIKey)
+      )
+    } else if self.presenter.weatherDataText == nil {
       self.searchField.becomeFirstResponder()
     }
   }
