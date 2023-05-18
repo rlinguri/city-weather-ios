@@ -387,7 +387,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "source ~/.bash_profile\n\nsed -i '' \"s/$OPENWEATHERMAP_API_KEY/\\$OPENWEATHERMAP_API_KEY/g\" \"${PROJECT_DIR}/Sources/Compile/Environment.swift\"\n";
+			shellScript = "source ~/.bash_profile\nif [[ -z \"$OPENWEATHERMAP_API_KEY\" ]]; then\n  echo \"API KEY HAS NOT BEEN SEY\"\nelse\n  sed -i '' \"s/$OPENWEATHERMAP_API_KEY/\\$OPENWEATHERMAP_API_KEY/g\" \"${PROJECT_DIR}/Sources/Compile/Environment.swift\"\nfi\n";
 		};
 		B2B84E802A16855800E0423A /* Replace Environment Placeholders */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -406,7 +406,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "source ~/.bash_profile\n\nsed -i '' \"s/\\$OPENWEATHERMAP_API_KEY/$OPENWEATHERMAP_API_KEY/g\" \"${PROJECT_DIR}/Sources/Compile/Environment.swift\"\n";
+			shellScript = "source ~/.bash_profile\n\nif [[ -z \"$OPENWEATHERMAP_API_KEY\" ]]; then\n  echo \"API KEY HAS NOT BEEN SEY\"\nelse\n  sed -i '' \"s/\\$OPENWEATHERMAP_API_KEY/$OPENWEATHERMAP_API_KEY/g\" \"${PROJECT_DIR}/Sources/Compile/Environment.swift\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
