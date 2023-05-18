@@ -30,7 +30,7 @@ class WeatherInteractor {
     guard let url = URL(string: "https://api.openweathermap.org/geo/1.0/direct?q=\(query)&limit=5&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
       self.router?.dispatch(
         action: .didEncounterError,
-        payload: Weather.Payload(error: .unknown) // @TODO: Add .badURL case
+        payload: Weather.Payload(error: .badURL)
       )
       return
     }
@@ -39,7 +39,7 @@ class WeatherInteractor {
       guard let data else {
         self.router?.dispatch(
           action: .didEncounterError,
-          payload: Weather.Payload(error: .unknown) // @TODO: Convert to Weather.Error
+          payload: Weather.Payload(error: .networkError)
         )
         return
       }
@@ -52,7 +52,7 @@ class WeatherInteractor {
       } catch {
         self.router?.dispatch(
           action: .didEncounterError,
-          payload: Weather.Payload(error: .unknown) // @TODO: Convert to Weather.Error.decoding
+          payload: Weather.Payload(error: .decodingError)
         )
       }
     }
@@ -68,7 +68,7 @@ class WeatherInteractor {
     guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(geocode.lat)&lon=\(geocode.lon)&appid=\(Environment.OPENWEATHERMAP_API_KEY)") else {
       self.router?.dispatch(
         action: .didEncounterError,
-        payload: Weather.Payload(error: .unknown) // @TODO: Add .badURL case
+        payload: Weather.Payload(error: .badURL)
       )
       return
     }
@@ -77,7 +77,7 @@ class WeatherInteractor {
       guard let data else {
         self.router?.dispatch(
           action: .didEncounterError,
-          payload: Weather.Payload(error: .unknown) // @TODO: Convert to Weather.Error
+          payload: Weather.Payload(error: .networkError)
         )
         return
       }
@@ -90,7 +90,7 @@ class WeatherInteractor {
       } catch {
         self.router?.dispatch(
           action: .didEncounterError,
-          payload: Weather.Payload(error: .unknown) // @TODO: Convert to Weather.Error.decoding
+          payload: Weather.Payload(error: .decodingError)
         )
       }
     }

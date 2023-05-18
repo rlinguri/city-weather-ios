@@ -29,6 +29,8 @@ extension Weather {
     case fetchWeather
     case fetchImage
     case loadEntity
+    case checkForAPIKey
+    case presentAlert
     case postNotification
     
     /// Execute the side effect on the router
@@ -103,6 +105,16 @@ extension Weather {
           router?.interactor.fetchIcon(forIconCode: icon)
         case .loadEntity:
           router?.entity?.load()
+        case .checkForAPIKey:
+          if Environment.OPENWEATHERMAP_API_KEY == "$OPENWEATHERMAP_API_KEY" {
+            router?.dispatch(action: .didEncounterError, payload: Weather.Payload(error: .missingAPIKey))
+          }
+        case .presentAlert:
+          var message = "An unknown error has occurred"
+          if let error = event.state.errors.last {
+            message = error.localizedDescription
+          }
+          router?.viewController?.presentErrorAlert(message: message)
       }
       
       completion?()

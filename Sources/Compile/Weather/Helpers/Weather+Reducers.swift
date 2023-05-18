@@ -35,7 +35,7 @@ extension Weather {
       case .didEncounterError:
         updatedState = state.update(withPayload: payload)
         // @TODO: Error handling. Which errors do we display to the user?
-        sideEffects.append(.void)
+        sideEffects.append(.presentAlert)
       case .entityDidLoad:
         updatedState = state.update(withPayload: payload)
         sideEffects.append(.setLoadingFalse)

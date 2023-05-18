@@ -201,6 +201,29 @@ class WeatherViewController: UIViewController {
     }
   }
   
+  /// Presents an alert with the title 'Error'
+  ///
+  /// - Parameter message: The string to display as the alert's message
+  func presentErrorAlert(message: String) {
+    let alertController = UIAlertController(
+      title: self.presenter.errorAlertTitle,
+      message: message,
+      preferredStyle: .alert
+    )
+    let action = UIAlertAction(
+      title: self.presenter.okButtonActionTitle,
+      style: .default
+    ) { [weak self] action in
+      self?.dismiss(animated: true) {
+        self?.searchField.text = nil
+        self?.weatherView.text = nil
+        self!.iconView.image = nil
+      }
+    }
+    alertController.addAction(action)
+    self.present(alertController, animated: true, completion: nil)
+  }
+  
   // MARK: - UIViewController
   
   /// Initialize the viewController from a storyboard or xib
