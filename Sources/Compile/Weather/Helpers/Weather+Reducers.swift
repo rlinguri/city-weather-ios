@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.3
+// Version:   0.1.4
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -32,10 +32,11 @@ extension Weather {
     var sideEffects: [Weather.SideEffect] = []
     
     switch action {
-      case .didEncounterError:
-        updatedState = state.update(withPayload: payload)
-        // @TODO: Error handling. Which errors do we display to the user?
-        sideEffects.append(.presentAlert)
+      case .didConfigureView:
+        updatedState = state.update(isViewConfigured: true)
+        sideEffects.append(.loadEntity)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.updateView)
       case .entityDidLoad:
         updatedState = state.update(withPayload: payload)
         sideEffects.append(.setLoadingFalse)
@@ -64,11 +65,11 @@ extension Weather {
         sideEffects.append(.setLoadingFalse)
         sideEffects.append(.saveImage)
         sideEffects.append(.updateView)
-      case .didConfigureView:
-        updatedState = state.update(isViewConfigured: true)
-        sideEffects.append(.loadEntity)
-        sideEffects.append(.setLoadingFalse)
-        sideEffects.append(.updateView)
+      case .didEncounterError:
+        updatedState = state.update(withPayload: payload)
+        // @TODO: Error handling. Which errors do we display to the user?
+        sideEffects.append(.presentAlert)
+        
     }
     
     return Weather.Result(state: updatedState, sideEffects: sideEffects)

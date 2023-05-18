@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.3
+// Version:   0.1.4
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -77,8 +77,6 @@ extension Weather {
           router?.entity?.imageData = event.state.images
           
           router?.entity?.save()
-        case .postNotification:
-          router?.interactor.postNotification(event: event)
         case .fetchGeocoding:
           guard let city = event.state.city else {
             router?.dispatch(
@@ -115,6 +113,8 @@ extension Weather {
             message = error.localizedDescription
           }
           router?.viewController?.presentErrorAlert(message: message)
+        case .postNotification:
+          router?.interactor.postNotification(event: event)
       }
       
       completion?()
