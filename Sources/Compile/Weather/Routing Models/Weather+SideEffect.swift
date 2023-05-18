@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.3
+// Version:   0.1.4
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -29,6 +29,8 @@ extension Weather {
     case fetchWeather
     case fetchImage
     case loadEntity
+    case checkForAPIKey
+    case presentAlert
     case postNotification
     
     /// Execute the side effect on the router
@@ -75,8 +77,6 @@ extension Weather {
           router?.entity?.imageData = event.state.images
           
           router?.entity?.save()
-        case .postNotification:
-          router?.interactor.postNotification(event: event)
         case .fetchGeocoding:
           guard let city = event.state.city else {
             router?.dispatch(
@@ -103,6 +103,18 @@ extension Weather {
           router?.interactor.fetchIcon(forIconCode: icon)
         case .loadEntity:
           router?.entity?.load()
+        case .checkForAPIKey:
+          if Environment.OPENWEATHERMAP_API_KEY == "$OPENWEATHERMAP_API_KEY" {
+            router?.dispatch(action: .didEncounterError, payload: Weather.Payload(error: .missingAPIKey))
+          }
+        case .presentAlert:
+          var message = "An unknown error has occurred"
+          if let error = event.state.errors.last {
+            message = error.localizedDescription
+          }
+          router?.viewController?.presentErrorAlert(message: message)
+        case .postNotification:
+          router?.interactor.postNotification(event: event)
       }
       
       completion?()

@@ -36,3 +36,12 @@ All notable changes to this project will be documented in this file.
 
 - API Interaction
 - Caching of Data
+
+## [0.1.4] - 2035-05-18
+
+### Added
+
+- App Icon and Default Accent Color
+- Error Handling
+- Reorder enum case handling
+

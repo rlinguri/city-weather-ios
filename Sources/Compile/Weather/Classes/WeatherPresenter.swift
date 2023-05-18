@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.4
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -33,6 +33,12 @@ class WeatherPresenter {
 
   /// The label for the search field
   let searchFieldLabel = Localized.enterCityTitle
+  
+  /// The title for an alert
+  let errorAlertTitle = Localized.errorTitle
+  
+  /// The OK button
+  let okButtonActionTitle = Localized.okButtonActionTitle
   
   /// When we receive weather data, set it here before updating the view
   var weatherDataText: String?

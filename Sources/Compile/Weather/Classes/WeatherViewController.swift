@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.4
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -199,6 +199,29 @@ class WeatherViewController: UIViewController {
       
       self.iconView.image = self.presenter.currentImage
     }
+  }
+  
+  /// Presents an alert with the title 'Error'
+  ///
+  /// - Parameter message: The string to display as the alert's message
+  func presentErrorAlert(message: String) {
+    let alertController = UIAlertController(
+      title: self.presenter.errorAlertTitle,
+      message: message,
+      preferredStyle: .alert
+    )
+    let action = UIAlertAction(
+      title: self.presenter.okButtonActionTitle,
+      style: .default
+    ) { [weak self] action in
+      self?.dismiss(animated: true) {
+        self?.searchField.text = nil
+        self?.weatherView.text = nil
+        self!.iconView.image = nil
+      }
+    }
+    alertController.addAction(action)
+    self.present(alertController, animated: true, completion: nil)
   }
   
   // MARK: - UIViewController
