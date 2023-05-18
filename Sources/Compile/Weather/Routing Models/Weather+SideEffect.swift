@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -47,8 +47,7 @@ extension Weather {
         case .setLoadingFalse:
           router?.viewController?.presenter.loading = false
         case .updateView:
-          // Temporarily set weather data in the presenter to geocode response
-          router?.viewController?.presenter.weatherDataText = "\(String(describing: event.state.geocodes))"
+          router?.viewController?.presenter.weatherDataText = "\(String(describing: event.state.current))"
           router?.viewController?.updateView()
         case .saveCity:
           router?.entity?.savedCity = event.state.city
@@ -75,10 +74,15 @@ extension Weather {
             return 
           }
           router?.interactor.fetchGeocode(forCityName: city)
-          break
         case .fetchWeather:
-          // @TODO: Call in interactor
-          break
+          guard let geocode = event.state.geocodes?.first else {
+            router?.dispatch(
+              action: .didEncounterError,
+              payload: Weather.Payload(error: .missingDependency)
+            )
+            return
+          }
+          router?.interactor.fetchWeather(forGeocode: geocode)
         case .loadEntity:
           router?.entity?.load()
       }

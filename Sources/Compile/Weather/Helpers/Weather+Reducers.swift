@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -52,8 +52,11 @@ extension Weather {
         sideEffects.append(.fetchGeocoding)
       case .didReceiveGeocodes:
         updatedState = state.update(withPayload: payload)
-        sideEffects.append(.setLoadingFalse) // Remove this after adding fetch weather
-        sideEffects.append(.updateView) // @TODO: replace with sideEffects.append(.fetchWeather)
+        sideEffects.append(.fetchWeather)
+      case .didReceiveWeather:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.updateView)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
         sideEffects.append(.loadEntity)
@@ -86,11 +89,12 @@ fileprivate extension Weather.State {
       isViewConfigured: self.isViewConfigured,
       city: payload.city,
       geocodes: payload.geocodes,
+      current: payload.current,
       errors: updatedErrors
     )
   }
   
-  /// Enables updating of state properties
+  /// Enables updating of state properties without a payload
   ///
   /// - Parameters:
   ///   - isViewConfigured: Whether or not the view is configured
@@ -99,7 +103,6 @@ fileprivate extension Weather.State {
   /// - Returns: The updated state
   func update(
     isViewConfigured: Bool? = nil,
-    city: String? = nil,
     error: Weather.Error? = nil
   ) -> Weather.State {
     var updatedErrors = self.errors
@@ -109,8 +112,9 @@ fileprivate extension Weather.State {
     
     return Weather.State(
       isViewConfigured: isViewConfigured ?? self.isViewConfigured,
-      city: city ?? self.city,
+      city: nil,
       geocodes: nil,
+      current: nil,
       errors: updatedErrors
     )
   }

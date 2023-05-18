@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.2
+// Version:   0.1.3
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -22,6 +22,8 @@ extension Weather {
     
     let geocodes: [Weather.GeocodeResponse]?
     
+    let current: Weather.CurrentResponse?
+    
     /// The error that occurred
     let error: Weather.Error?
     
@@ -31,10 +33,12 @@ extension Weather {
     init(
       city: String? = nil,
       geocodes: [Weather.GeocodeResponse]? = nil,
+      current: Weather.CurrentResponse? = nil,
       error: Weather.Error? = nil
     ) {
       self.city = city
       self.geocodes = geocodes
+      self.current = current
       self.error = error
     }
     
