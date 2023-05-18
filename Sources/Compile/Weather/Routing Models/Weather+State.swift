@@ -26,6 +26,9 @@ extension Weather {
     /// Whether or not view setup tasks are complete
     let isViewConfigured: Bool
     
+    /// The city that we arecurrently fetching weather for
+    let city: String?
+    
     /// An array of errors
     let errors: [Weather.Error]
     
@@ -33,6 +36,7 @@ extension Weather {
     static var initial: Weather.State {
       return Weather.State(
         isViewConfigured: false,
+        city: nil,
         errors: []
       )
     }
@@ -44,10 +48,12 @@ extension Weather {
     ///   - errors: An array of errors
     init(
       isViewConfigured: Bool,
+      city: String?,
       errors: [Weather.Error]
     ) {
       self.timestamp = Date().timeIntervalSince1970
       self.isViewConfigured = isViewConfigured
+      self.city = city
       self.errors = errors
     }
   }
@@ -58,6 +64,7 @@ extension Weather.State: Equatable {
   
   static func == (lhs: Weather.State, rhs: Weather.State) -> Bool {
     return lhs.isViewConfigured == rhs.isViewConfigured &&
+    lhs.city == rhs.city &&
     lhs.errors == rhs.errors
   }
   

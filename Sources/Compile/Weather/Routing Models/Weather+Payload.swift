@@ -18,6 +18,8 @@ extension Weather {
   /// An object that can be dispatched
   struct Payload {
     
+    let city: String?
+    
     /// The error that occurred
     let error: Weather.Error?
     
@@ -25,8 +27,10 @@ extension Weather {
     ///
     /// - Parameter error: An error to dispatch
     init(
+      city: String? = nil,
       error: Weather.Error? = nil
     ) {
+      self.city = city
       self.error = error
     }
     

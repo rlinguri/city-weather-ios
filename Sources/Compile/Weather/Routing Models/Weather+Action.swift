@@ -19,6 +19,7 @@ extension Weather {
   enum Action: String {
     
     case didConfigureView
+    case didEnterCity
     case didEncounterError
     
     /// The action converted to a `Notification.Name` instance

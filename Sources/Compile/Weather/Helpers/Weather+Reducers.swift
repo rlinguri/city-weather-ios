@@ -35,6 +35,8 @@ extension Weather {
       case .didEncounterError:
         updatedState = state.update(withPayload: payload)
         sideEffects.append(.void)
+      case .didEnterCity:
+        updatedState = state.update(withPayload: payload)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
         sideEffects.append(.void)
@@ -63,6 +65,7 @@ fileprivate extension Weather.State {
     
     return Weather.State(
       isViewConfigured: self.isViewConfigured,
+      city: payload.city,
       errors: updatedErrors
     )
   }
@@ -76,6 +79,7 @@ fileprivate extension Weather.State {
   /// - Returns: The updated state
   func update(
     isViewConfigured: Bool? = nil,
+    city: String? = nil,
     error: Weather.Error? = nil
   ) -> Weather.State {
     var updatedErrors = self.errors
@@ -85,6 +89,7 @@ fileprivate extension Weather.State {
     
     return Weather.State(
       isViewConfigured: isViewConfigured ?? self.isViewConfigured,
+      city: city ?? self.city,
       errors: updatedErrors
     )
   }

@@ -26,7 +26,7 @@ extension Weather {
       event: Weather.Event,
       completion: (() -> Void)? = nil
     ) {
-      // track
+      print("Weather.Middleware.atDispatch(event: \(event)")
       
       completion?()
     }
@@ -40,8 +40,8 @@ extension Weather {
       event: Weather.Event,
       completion: (() -> Void)? = nil
     ) {
-      // track
-      
+      print("Weather.Middleware.preExecute(event: \(event)")
+
       completion?()
     }
     

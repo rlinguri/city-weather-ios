@@ -6,7 +6,7 @@
 // Copyright: © 2023 Roderic Linguri • All Rights Reserved
 // License:   MIT
 //
-// Version:   0.1.1
+// Version:   0.1.2
 // Requires:  iOS 15.6
 //            Swift 5.0
 //
@@ -28,7 +28,9 @@ extension SceneDelegate: UIWindowSceneDelegate {
   ) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     self.window = UIWindow(windowScene: windowScene)
-    self.window?.rootViewController = ViewController()
+    self.window?.rootViewController = UINavigationController(
+      rootViewController: Weather.createViewController()
+    )
     self.window?.makeKeyAndVisible()
   }
   
