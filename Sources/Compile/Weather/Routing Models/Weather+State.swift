@@ -29,6 +29,8 @@ extension Weather {
     /// The city that we arecurrently fetching weather for
     let city: String?
     
+    let geocodes: [GeocodeResponse]?
+    
     /// An array of errors
     let errors: [Weather.Error]
     
@@ -37,6 +39,7 @@ extension Weather {
       return Weather.State(
         isViewConfigured: false,
         city: nil,
+        geocodes: nil,
         errors: []
       )
     }
@@ -49,11 +52,13 @@ extension Weather {
     init(
       isViewConfigured: Bool,
       city: String?,
+      geocodes: [Weather.GeocodeResponse]?,
       errors: [Weather.Error]
     ) {
       self.timestamp = Date().timeIntervalSince1970
       self.isViewConfigured = isViewConfigured
       self.city = city
+      self.geocodes = geocodes
       self.errors = errors
     }
   }
@@ -62,6 +67,8 @@ extension Weather {
 
 extension Weather.State: Equatable {
   
+  /// Used in tests!
+  /// // @TODO: Make georequest equatable to ad into this
   static func == (lhs: Weather.State, rhs: Weather.State) -> Bool {
     return lhs.isViewConfigured == rhs.isViewConfigured &&
     lhs.city == rhs.city &&

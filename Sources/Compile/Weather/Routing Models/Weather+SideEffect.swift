@@ -47,17 +47,34 @@ extension Weather {
         case .setLoadingFalse:
           router?.viewController?.presenter.loading = false
         case .updateView:
+          // Temporarily set weather data in the presenter to geocode response
+          router?.viewController?.presenter.weatherDataText = "\(String(describing: event.state.geocodes))"
           router?.viewController?.updateView()
         case .saveCity:
           router?.entity?.savedCity = event.state.city
           router?.entity?.save()
         case .saveGeocode:
-          // @TODO Add geocode to state so we can save it
-          break
+          // @TODO: Probably need to implement another UI piece that enables the user to select one of the geocodes. For now, this is not in the requirements
+          guard let geoCodeToSave = event.state.geocodes?.first else {
+            router?.dispatch(
+              action: .didEncounterError,
+              payload: Weather.Payload(error: .missingDependency)
+            )
+            return
+          }
+          router?.entity?.savedGeocode = geoCodeToSave
+          router?.entity?.save()
         case .postNotification:
           router?.interactor.postNotification(event: event)
         case .fetchGeocoding:
-          // @TODO: Call in interactor
+          guard let city = event.state.city else {
+            router?.dispatch(
+              action: .didEncounterError,
+              payload: Weather.Payload(error: .missingDependency)
+            )
+            return 
+          }
+          router?.interactor.fetchGeocode(forCityName: city)
           break
         case .fetchWeather:
           // @TODO: Call in interactor

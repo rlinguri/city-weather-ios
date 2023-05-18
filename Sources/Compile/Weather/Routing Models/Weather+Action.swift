@@ -21,6 +21,7 @@ extension Weather {
     case didConfigureView
     case entityDidLoad
     case didEnterCity
+    case didReceiveGeocodes
     case didEncounterError
     
     /// The action converted to a `Notification.Name` instance

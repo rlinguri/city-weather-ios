@@ -22,8 +22,8 @@ class WeatherEntity {
   // If the user enters a city, save it here
   var savedCity: String?
   
-  // @TODO: Cache the geocode object here
-  var savedGeocode: String?
+  // If we receive a geocode, save it here
+  var savedGeocode: Weather.GeocodeResponse?
   
   /// Load data from persistence
   func load() {
@@ -34,6 +34,29 @@ class WeatherEntity {
         payload: Weather.Payload(city: city)
       )
     }
+    
+    if let geocodeData = UserDefaults.standard.data(forKey: Weather.Key.savedGeocode) {
+      do {
+        let geocode = try JSONDecoder().decode(Weather.GeocodeResponse.self, from: geocodeData)
+        self.savedGeocode = geocode
+      } catch {
+        print("no data saved for geocode")
+      }
+    }
+    
+    var geocodes = [Weather.GeocodeResponse]()
+    
+    if let savedGeocode = self.savedGeocode {
+      geocodes.append(savedGeocode)
+    }
+    
+    self.router?.dispatch(
+      action: .entityDidLoad,
+      payload: Weather.Payload(
+        city: self.savedCity,
+        geocodes: geocodes
+      )
+    )
   }
   
   /// Persist data

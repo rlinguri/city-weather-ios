@@ -20,6 +20,8 @@ extension Weather {
     
     let city: String?
     
+    let geocodes: [Weather.GeocodeResponse]?
+    
     /// The error that occurred
     let error: Weather.Error?
     
@@ -28,9 +30,11 @@ extension Weather {
     /// - Parameter error: An error to dispatch
     init(
       city: String? = nil,
+      geocodes: [Weather.GeocodeResponse]? = nil,
       error: Weather.Error? = nil
     ) {
       self.city = city
+      self.geocodes = geocodes
       self.error = error
     }
     

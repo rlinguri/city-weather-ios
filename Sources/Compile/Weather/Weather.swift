@@ -26,6 +26,8 @@ struct Weather {
     
     static let savedCity: String = "SAVED_CITY"
     
+    static let savedGeocode: String = "SAVED_GEOCODE"
+    
   }
   
   enum Label {

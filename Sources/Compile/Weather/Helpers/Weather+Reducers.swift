@@ -50,6 +50,10 @@ extension Weather {
         sideEffects.append(.saveCity)
         sideEffects.append(.updateView)
         sideEffects.append(.fetchGeocoding)
+      case .didReceiveGeocodes:
+        updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingFalse) // Remove this after adding fetch weather
+        sideEffects.append(.updateView) // @TODO: replace with sideEffects.append(.fetchWeather)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
         sideEffects.append(.loadEntity)
@@ -81,6 +85,7 @@ fileprivate extension Weather.State {
     return Weather.State(
       isViewConfigured: self.isViewConfigured,
       city: payload.city,
+      geocodes: payload.geocodes,
       errors: updatedErrors
     )
   }
@@ -105,6 +110,7 @@ fileprivate extension Weather.State {
     return Weather.State(
       isViewConfigured: isViewConfigured ?? self.isViewConfigured,
       city: city ?? self.city,
+      geocodes: nil,
       errors: updatedErrors
     )
   }
