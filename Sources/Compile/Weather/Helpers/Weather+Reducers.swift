@@ -37,9 +37,12 @@ extension Weather {
         sideEffects.append(.void)
       case .didEnterCity:
         updatedState = state.update(withPayload: payload)
+        sideEffects.append(.setLoadingTrue)
+        sideEffects.append(.updateView)
       case .didConfigureView:
         updatedState = state.update(isViewConfigured: true)
-        sideEffects.append(.void)
+        sideEffects.append(.setLoadingFalse)
+        sideEffects.append(.updateView)
     }
     
     return Weather.Result(state: updatedState, sideEffects: sideEffects)

@@ -65,6 +65,16 @@ class WeatherViewController: UIViewController {
     return view
   }()
   
+  /// A loading indicator
+  let spinner: UIActivityIndicatorView = {
+    let view = UIActivityIndicatorView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.hidesWhenStopped = true
+    view.style = .large
+    view.color = .orange
+    return view
+  }()
+  
   /// Initialize the viewController instance
   ///
   /// - Parameters:
@@ -88,6 +98,8 @@ class WeatherViewController: UIViewController {
     self.view.addSubview(self.searchField)
     
     self.view.addSubview(self.weatherView)
+    
+    self.view.addSubview(self.spinner)
   }
   
   private func setupConstraints() {
@@ -137,6 +149,12 @@ class WeatherViewController: UIViewController {
       self.weatherView.bottomAnchor.constraint(
         equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,
         constant: self.presenter.spacing * -1
+      ),
+      self.spinner.centerXAnchor.constraint(
+        equalTo: self.view.safeAreaLayoutGuide.centerXAnchor
+      ),
+      self.spinner.centerYAnchor.constraint(
+        equalTo: self.view.safeAreaLayoutGuide.centerYAnchor
       )
     ]
     
@@ -145,7 +163,14 @@ class WeatherViewController: UIViewController {
   
   /// Called from a side effect when new data is available in the presenter
   func updateView() {
-    self.weatherView.text = self.presenter.weatherDataText
+    DispatchQueue.main.async {
+      if self.presenter.loading == true {
+        self.spinner.startAnimating()
+      } else {
+        self.spinner.stopAnimating()
+      }
+      self.weatherView.text = self.presenter.weatherDataText
+    }
   }
   
   // MARK: - UIViewController

@@ -16,9 +16,12 @@ import UIKit
 extension Weather {
   
   /// Encapsulation of methods to execute on the Store based on an event
-  enum SideEffect {
+  enum SideEffect: String {
     
     case void
+    case setLoadingTrue
+    case setLoadingFalse
+    case updateView
     case postNotification
     
     /// Execute the side effect on the router
@@ -31,9 +34,22 @@ extension Weather {
       event: Weather.Event,
       completion: (() -> Void)? = nil
     ) {
+      print("execute \(self)")
+      if router?.viewController == nil {
+        print("no viewController")
+      } else if router?.viewController?.presenter == nil {
+        print("no presenter")
+      }
+      
       switch self {
         case .void:
           break
+        case .setLoadingTrue:
+          router?.viewController?.presenter.loading = true
+        case .setLoadingFalse:
+          router?.viewController?.presenter.loading = false
+        case .updateView:
+          router?.viewController?.updateView()
         case .postNotification:
           router?.interactor.postNotification(event: event)
       }

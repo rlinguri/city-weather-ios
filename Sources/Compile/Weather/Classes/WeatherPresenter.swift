@@ -19,6 +19,8 @@ class WeatherPresenter {
   /// The component that handles data persistence and retrieval
   let entity: WeatherEntity
   
+  var loading: Bool = true
+  
   /// The default space to the edge of the view and between subviews
   let spacing: CGFloat = 18.0
   
